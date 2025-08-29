@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Health Chatbot</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2rem; }
+        .chat-container { max-width: 700px; margin: 0 auto; }
+        .message { margin-bottom: 1rem; padding: 0.75rem; border-radius: 10px; }
+        .user { background-color: #d1e7ff; text-align: right; }
+        .assistant { background-color: #f1f1f1; text-align: left; }
+        form { margin-top: 2rem; }
+        textarea {
+            width: 100%;
+            min-height: 3rem;
+            max-height: 10rem;
+            padding: 0.5rem;
+            font-size: 1rem;
+            resize: vertical;
+        }
+        button { padding: 0.5rem 1rem; font-size: 1rem; margin-top: 0.5rem; }
+        .error { color: #a94442; background: #f2dede; padding: 0.5rem; border-radius: 5px; }
+        .clear-btn { margin-top: 1rem; }
+        #chat-box {
+            max-height: 400px;
+            overflow-y: auto;
+            background: #fafbfc;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+        /* Improved color contrast for accessibility */
+        .user { color: #084298; }
+        .assistant { color: #333; }
+    </style>
+</head>
+<body>
+    <div class="chat-container" aria-live="polite">
+        <h1 id="chatbot-title">AI Health Chatbot</h1>
+
+        {% if error %}
+            <p class="error" role="alert" aria-live="assertive">{{ error }}</p>
+        {% endif %}
+
+        <div id="chat-box" tabindex="0" aria-label="Chat history" aria-live="polite">
+            {% for msg in messages %}
+                <div class="message {{ msg.role }}">
+                    <strong>{{ msg.role|capitalize }}:</strong><br />
+                    {{ msg.content | safe | nl2br }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <form method="post" action="{{ url_for('index') }}" aria-labelledby="chatbot-title">
+            <label for="prompt" class="sr-only">Ask a medical question</label>
+            <textarea id="prompt" name="prompt" placeholder="Ask a medical question..." required aria-required="true"></textarea>
+            <br />
+            <button type="submit" aria-label="Send message">Send</button>
+        </form>
+
+        <form method="get" action="{{ url_for('clear') }}">
+            <button type="submit" class="clear-btn" aria-label="Clear chat history">Clear Chat</button>
+        </form>
+    </div>
+    <script>
+        // Auto-scroll chat to bottom
+        window.onload = function() {
+            var chatBox = document.getElementById('chat-box');
+            if(chatBox) chatBox.scrollTop = chatBox.scrollHeight;
+        };
+        // Optional: Submit on Ctrl+Enter
+        document.getElementById('prompt')?.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                this.form.submit();
+            }
+        });
+    </script>
+</body>
+</html>
