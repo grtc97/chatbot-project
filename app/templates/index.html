@@ -7,8 +7,8 @@
         body { font-family: Arial, sans-serif; margin: 2rem; }
         .chat-container { max-width: 700px; margin: 0 auto; }
         .message { margin-bottom: 1rem; padding: 0.75rem; border-radius: 10px; }
-        .user { background-color: #d1e7ff; text-align: right; }
-        .assistant { background-color: #f1f1f1; text-align: left; }
+        .user { background-color: #b81e96ff; text-align: right; }
+        .assistant { background-color: #a328289f; text-align: left; }
         form { margin-top: 2rem; }
         textarea {
             width: 100%;
@@ -30,13 +30,13 @@
             border-radius: 10px;
         }
         /* Improved color contrast for accessibility */
-        .user { color: #084298; }
-        .assistant { color: #333; }
+        .user { color: #089819ff; }
+        .assistant { color: #6d2b2bff; }
     </style>
 </head>
 <body>
     <div class="chat-container" aria-live="polite">
-        <h1 id="chatbot-title">AI Health Chatbot</h1>
+        <h1 id="chatbot-title">AI-based Health Chatbot</h1>
 
         {% if error %}
             <p class="error" role="alert" aria-live="assertive">{{ error }}</p>
@@ -53,7 +53,7 @@
 
         <form method="post" action="{{ url_for('index') }}" aria-labelledby="chatbot-title">
             <label for="prompt" class="sr-only">Ask a medical question</label>
-            <textarea id="prompt" name="prompt" placeholder="Ask a medical question..." required aria-required="true"></textarea>
+            <textarea id="prompt" name="prompt" placeholder="Ask a question about health or medicine." required aria-required="true"></textarea>
             <br />
             <button type="submit" aria-label="Send message">Send</button>
         </form>

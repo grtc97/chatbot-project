@@ -5,13 +5,13 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-HF_TOKEN = os.environ.get("HF_TOKEN")
+HF_TOKEN = os.environ.get("HF_TOKEN")  # check other tokens in dotenv file
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 load_dotenv()
 
-from markupsafe import Markup
+from markupsafe import Markup  # noqa: E402
 
 
 def nl2br(value):
